@@ -1,6 +1,20 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Logout03Icon } from "@hugeicons/core-free-icons";
 
 const NAV_ITEMS = [
   { name: "Dashboard", href: "/" },
@@ -10,20 +24,61 @@ const NAV_ITEMS = [
 ];
 
 const NavItems = () => {
+  const pathname = usePathname();
+  console.log("Current pathname:", pathname);
+
+  const isActive = (href: string) => {
+    return pathname === href;
+  };
+
   return (
     <ul className="flex space-x-2">
-      {NAV_ITEMS.map((items) => (
-        <li key={items.name}>
-          <Link href={items.href}>
-            <Button
-              variant={items.name === "Dashboard" ? "secondary" : "ghost"}
-            >
-              {items.name}
+      {NAV_ITEMS.map(({ name, href }) => (
+        <li key={name}>
+          <Link href={href}>
+            <Button variant={isActive(href) ? "secondary" : "ghost"}>
+              {name}
             </Button>
           </Link>
         </li>
       ))}
     </ul>
+  );
+};
+
+const UserDropdown = () => {
+  const router = useRouter();
+
+  const onSignOut = () => {
+    // Implement sign-out logic here
+    router.push("/login");
+  };
+
+  const user = { name: "John Doe", email: "john.doe@example.com" }; // Replace with actual user data
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="secondary" className="bg-muted/40">
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+          </Avatar>
+
+          <div className="hidden md:flex flex-col items-start text-gray-400">
+            <span>{user.name}</span>
+          </div>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="text-gray-400">
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={onSignOut}>
+          <HugeiconsIcon icon={Logout03Icon} size={24} color="currentColor" />
+          Sign Out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
@@ -47,7 +102,7 @@ const Header = () => {
           </nav>
         </div>
 
-        <div className="flex items-center gap-4">user dropdown</div>
+        <UserDropdown />
       </div>
     </header>
   );
