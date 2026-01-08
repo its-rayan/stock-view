@@ -143,4 +143,52 @@
     border-radius: 8px !important;
     overflow: hidden !important;
   }
+
+  .auth-layout {
+    @apply flex flex-col justify-between lg:flex-row h-screen bg-black relative overflow-hidden;
+  }
+
+  .auth-logo {
+    @apply pt-6 lg:pt-8 mb-8 lg:mb-12;
+  }
+
+  .auth-left-section {
+    @apply w-full lg:w-[45%] lg:h-screen px-6 lg:px-16 flex flex-col overflow-y-auto;
+  }
+
+  .auth-right-section {
+    @apply w-full max-lg:border-t  lg:w-[55%] lg:h-screen bg-black px-6 py-4 md:p-6 lg:py-12 lg:px-18 flex flex-col justify-start rounded-2xl;
+  }
+}
+
+/* Custom scrollbar that shows on hover */
+.scrollbar-hide-default {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.scrollbar-hide-default::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-hide-default::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-hide-default::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.scrollbar-hide-default:hover {
+  scrollbar-color: #30333a transparent;
+}
+
+.scrollbar-hide-default:hover::-webkit-scrollbar-thumb {
+  background-color: #30333a;
+}
+
+.scrollbar-hide-default::-webkit-scrollbar-thumb:hover {
+  background-color: #9095a1;
 }
